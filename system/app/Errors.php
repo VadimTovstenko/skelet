@@ -1,24 +1,19 @@
 <?
-class Errors extends App
+class Errors
 {
-    private $tbl = 'errors';
-    private $errors = array();
+    private static $errors = array();
     
-    public function fix($uid, $file)
+    public static function add($name,$mess)
     {
-        $query = "INSERT INTO ".$this->tbl." SET user_id ='".$uid."', file = '".$file."', date = NOW(), ip ='".$_SERVER['REMOTE_ADDR']."'";
-        $this->dbase->query($query);
+        self::$errors[$name] = $mess;
     }
     
-    
-    public function add_msg($text)
+    public static function get($name)
     {
-        $this->errors[] = $text;
-    }
-    
-    public function get_errors()
-    {
-        return $this->errors;
+        if ( isset(self::$errors[$name]) ) {
+            returnself::$errors[$name];
+        }
+
     }
 
     

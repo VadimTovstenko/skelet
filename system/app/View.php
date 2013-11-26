@@ -42,11 +42,11 @@ class View
         
         ob_start();
         
-        include $_SERVER["DOCUMENT_ROOT"].'/view/'.$controllerName.'/'.$this->view.'.html';
+        include ROOT.'/view/'.$controllerName.'/'.$this->view.'.html';
         
         $this->content = ob_get_contents();
-        
-        ob_clean();
+
+        ob_end_clean();
         
         //return $this->content;
     }
@@ -56,11 +56,11 @@ class View
     {
         ob_start();
         
-        include $_SERVER["DOCUMENT_ROOT"].'/layout/'.$this->layout.'.html';
+        include ROOT.'/layout/'.$this->layout.'.html';
         
         $res = ob_get_contents();
-        
-        ob_clean();
+
+        ob_end_clean();
         
         return $res;
     }

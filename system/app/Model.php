@@ -17,7 +17,7 @@ class Model
 		
 		// Определяем имя нужного класса
 		$class = ucfirst(strtolower($name));
-        $path  = $_SERVER["DOCUMENT_ROOT"].$this->_dir.$class.'.php';
+        $path  = ROOT.$this->_dir.$class.'.php';
         
         if(!file_exists($path))
             die("Модель <strong>$class</strong> не существует!");

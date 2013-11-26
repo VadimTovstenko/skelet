@@ -10,11 +10,10 @@ class App
     {      
         $url    = new Url();
         $config = new Config();
-        
-        
+
         //-- languages detect 
         $lanCfg = $config->get('languages');
-        
+        $offset  = 0;
         // если включена мультиязичность
         if($lanCfg['status'] === true) {
             
@@ -25,10 +24,10 @@ class App
         //-- languages detect end
         
         $controllerName = (string) $url->get(0 + $offset);
-        $actionName     = (string) $url->get(1 + $offset);
+        $actionName      = (string) $url->get(1 + $offset);
         
         $controllerName = ($controllerName)? strtolower($controllerName) : $config->get('default_controller');
-        $actionName     = ($actionName)?     strtolower($actionName)     : $config->get('default_action');
+        $actionName     = ($actionName)?       strtolower($actionName)     : $config->get('default_action');
             
         self::init(array(
                     'controller' => $controllerName,

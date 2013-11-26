@@ -3,11 +3,11 @@
 
 //Функция автоматической загрузки классов           
 function __autoload($className) 
-{   
+{
     $className  = str_replace('_','/',$className,$count);
     
     if($count > 0) {
-        $class_path = $className.".php";
+        $class_path = lcfirst($className).".php";
     }
     else {
         $class_path = 'system/app/'.$className.".php";

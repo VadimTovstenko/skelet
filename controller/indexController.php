@@ -11,15 +11,13 @@ class indexController extends Controller
     
     public function indexAction()
     {
-        App::init(array('controller' => 'index', 'action' => 'edit'));
-        App::run();
+        //App::init(array('controller' => 'index', 'action' => 'edit'));
+        //App::run();
         //return;
         
         $sql   = new Component_Sql();
-        $model = new Model();
         
-        $user  = $this->model->users;  
-        //$db    = $this->model->db;
+        $user  = $this->model->users;
          
         $this->view->assign('title','Trololo');
         $this->view->assign('name',$user->test());
@@ -32,15 +30,15 @@ class indexController extends Controller
         
         $model = new Model();
         $user  = $this->model->users;  
-        $db    = $this->model->db;
+        //$db    = $this->model->db;
          
-        $db->query('SELECT NOW() as now'); 
+        //$db->query('SELECT NOW() as now');
         
         $this->view->tpl('index');
          
         $this->view->assign('title','Edit');
         $this->view->assign('action','edit');
-        $this->view->assign('name',$db->result()->now);
+       // $this->view->assign('name',$db->result()->now);
         $this->view->assign('lang',$this->language);
         $this->view->assign('url',$this->createUrl(array('index','edit')));
         

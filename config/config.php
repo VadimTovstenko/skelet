@@ -6,9 +6,9 @@
         
         'db' => array(
             'location'      => "localhost",
-            'user'          => "root",
-            'pass'          => "",
-            'name'          => "test",
+            'user'          => "ani",
+            'pass'          => "wtVngqxn",
+            'name'          => "lipton_hash",
             'charset'       => "CP1251",
             'show_error'    => DEBUG_MODE,
         ),

@@ -1,9 +1,7 @@
 <?
-
 class Users
 {
     private $table = 'users_data';
-    private $tbl_p = 'users_profile';
     public  $social;
     public  $user_id;
     public  $avatar;
@@ -12,8 +10,7 @@ class Users
     
     public function __construct()
     {
-       $model = new Model();
-       $this->db = $model->db;
+       $this->db = new Component_Db();
     }
     
     

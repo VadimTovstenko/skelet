@@ -5,13 +5,13 @@ class Config
     
     
     public function __construct(){
-        require_once($_SERVER["DOCUMENT_ROOT"]."/config/config.php");  
+        require_once(ROOT."/config/config.php");
         $this->config = $config;
     }
     
     public function get($paramName) 
     {   
-        if(isset($this->config[$paramName])) {
+        if ( isset($this->config[$paramName]) ) {
             return $this->config[$paramName];
         }
         return null;

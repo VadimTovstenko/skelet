@@ -1,5 +1,5 @@
 <?
-class Db 
+class Component_Db
 { 
     private $db_user;
     private $db_pass;

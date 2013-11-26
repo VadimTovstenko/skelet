@@ -10,10 +10,10 @@ class Controller
     
     
     
-    public function __construct(){
-        $this->view     = new View();
-        $this->model    = new Model();  
-        $this->request  = new Request(); 
+    public function __construct() {
+        $this->view       = new View();
+        $this->model     = new Model();
+        $this->request   = new Request();
         $this->language = $this->getLanguage();
     }   
     
@@ -56,6 +56,7 @@ class Controller
     
     public function end() 
     {
-        $this->model->db->close();
+        $db = new Component_Db();
+        $db->close();
     }
 }
