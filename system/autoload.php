@@ -5,7 +5,7 @@
 function __autoload($className) 
 {
     $className  = str_replace('_','/',$className,$count);
-    
+//  echo $className.'<br>';
     if($count > 0) {
         if(strpos($className, 'Zend') === 0) {
             $class_path = 'library/'.$className.'.php';
@@ -23,11 +23,7 @@ function __autoload($className)
 }
 
 
-function end_app() {
-    App::end();   
-}
-
-register_shutdown_function('end_app');
+register_shutdown_function('work_time');
 
 // функция опеределния времени работы скрипта 
 function work_time() 

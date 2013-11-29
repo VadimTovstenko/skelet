@@ -1,10 +1,22 @@
 <?
+/**
+ *  @author 	Anton Tovstenko
+ *
+ * Class Config
+ * Синглтон
+ * Класс для получения параметров из конфигурационного файла
+ */
 class Config
 {
 
     private static $instance;
-    
 
+
+    /**
+     * Получение параметров конфигурации
+     * @param $paramName
+     * @return mixed
+     */
     public static function get($paramName)
     {
         if (!isset(self::$instance)) {
@@ -18,6 +30,10 @@ class Config
     }
 
 
+    /**
+     * Определение
+     * @return mixed
+     */
     public static function getInstance(){
         if (!isset(self::$instance)) {
             if(!file_exists(ROOT.'/config/config.php')) {

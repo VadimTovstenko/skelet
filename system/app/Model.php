@@ -1,21 +1,54 @@
 <?
+/**
+ * @author Anton Tovstenko
+ *
+ * Class Model
+ * Создает подключение к БД
+ * Дает доступ к моделям через свойства екземпляка класса
+ *      Пример:
+ *      $model = new Model();
+ *      $users = $model->users;
+ *
+ */
 class Model
 {
+
+    /**
+     * Адрес хранения моделей
+     * @var string
+     */
     private $_dir = '/model/';
 
+
+    /**
+     * Экземпляр компонента для работи в ДБ
+     * @var Component_Db
+     */
     protected  $db;
 
+
+    /**
+     * Созданные объекты моделей
+     * @var array
+     */
+    private static $objects = array();
+
+
+    /**
+     * Конструктор модели
+     */
     public function __construct()
     {
-        $this->db = new Component_Db();
+        $this->db = Component_Db::getInstance();
     }
 
-    // Созданные объекты
-	private static $objects = array();
-    
-    
-    // Магический метод, создает нужный объект Модели
-	public function __get($name)
+
+    /**
+     * Магический метод, создает нужный объект Модели
+     * @param $name
+     * @return mixed
+     */
+    public function __get($name)
 	{
 		// Если такой объект уже существует, возвращаем его
 		if (isset(self::$objects[$name])) {

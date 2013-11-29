@@ -13,14 +13,26 @@ class Component_Db
     public  $res_id = '';
     private $connected = false;
     
-
+    private  static $instance;
     
     public function __construct()
     {
         //parent::__construct();
         $this->connect();
     }
-    
+
+
+    public static function getInstance()
+    {
+        if(isset(self::$instance)){
+            return self::$instance;
+        }
+        self::$instance = new self();
+
+        return self::$instance;
+    }
+
+
     function connect()
 	{
         // При повторном вызове возвращаем существующий линк

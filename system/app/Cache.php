@@ -1,4 +1,10 @@
 <?
+/**
+ *  @author 	Anton Tovstenko
+ *
+ * Class Cache
+ * Класс для кеширования страниц
+ */
 class Cache
 {
 

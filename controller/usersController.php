@@ -1,6 +1,6 @@
 <?
 
-class usersController extends Controller
+class UsersController extends Controller
 {
 
     //вместо конструктора
@@ -48,9 +48,11 @@ class usersController extends Controller
 
             if($gifts->setGift($pid,'lit')){
                 echo  'ok!';
-                exit;
+
             }
         }
+
+        exit;
 
     }
 

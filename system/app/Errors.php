@@ -11,7 +11,7 @@ class Errors
     public static function get($name)
     {
         if ( isset(self::$errors[$name]) ) {
-            returnself::$errors[$name];
+            return self::$errors[$name];
         }
 
     }

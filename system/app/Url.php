@@ -1,11 +1,18 @@
 <?
 /**
+ * @author Anton Tovstenko
+ *
  * Класс-обертка для обращения к адресной строке
- * @author 	Anton Tovstenko
  */
-  
 class Url
-{   
+{
+
+    /**
+     * Получение параметров из Url-строки
+     * @param null $section
+     * @param null $type
+     * @return bool|int|string
+     */
     public function get($section = null, $type = null)
     {
         $uri = array();
@@ -47,7 +54,8 @@ class Url
         else    
             return false;
     }
-        
+
+
     private function sanitizeURL($url) 
     {
         $url = trim($url);

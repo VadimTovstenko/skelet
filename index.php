@@ -25,5 +25,4 @@
 //Создаем приложение
     $app = new App();
     $app::run();
-    
-    work_time();    
+

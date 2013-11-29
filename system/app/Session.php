@@ -1,8 +1,15 @@
 <?
+/**
+ * @author Anton Tovstenko
+ *
+ * Class Session
+ * Класс для работы с сессионным массивом
+ */
 class Session
 {
 
     /**
+     * Получение значения
      * @param $name
      * @return null
      */
@@ -13,6 +20,7 @@ class Session
 
 
     /**
+     * Сохранение значения
      * @param $name
      * @param $value
      */
@@ -21,7 +29,10 @@ class Session
         $_SESSION[$name] = $value;
     }
 
+
+
     /**
+     * Удаление значения
      * @param $name
      */
     public static function delParam( $name )
@@ -32,12 +43,18 @@ class Session
     }
 
 
+    /**
+     * Разрушение сессии
+     */
     public static function destroy()
     {
         session_destroy();
     }
 
 
+    /**
+     * Вывод сессионного массива в форматированом виде
+     */
     public static function show()
     {
         print '<pre>';

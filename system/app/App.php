@@ -1,29 +1,60 @@
 <?
+/**
+ *  @author 	Anton Tovstenko
+ *
+ * Class App
+ * Главный класс приложения.
+ * Получает данные из адресной строки.
+ * Определяет Контроллер и вызывает Действие
+ * Выводит готовую страницу
+ */
 class App
 {
-    
+
+
+    /**
+     * Экземпляр вызываемого Контроллера
+     * @var controller
+     */
     private static $controller;
+
+
+
+    /**
+     * Название вызываемого контроллера
+     */
     private static $actionName;
 
+
+    /**
+     * Смещение параметров Url-адреса
+     * Зависит от параметра языковой локали
+     * @var int
+     */
     public static $offset = 0;
-    
+
+
+    /**
+     * Коструктор приложения
+     * Автоматическое определение Контроллера и Действия
+     */
     public function __construct()
     {      
         $url   = new Url();
 
-        //-- languages detect 
+        // languages detect
         $lanCfg = Config::get('languages');
         // если включена мультиязичность
         if($lanCfg['status'] === true) {
             
-            $language = new Language();
+            $language = new UrlOffsetLanguage();
             $language->init( $lanCfg, $url );
             self::$offset   = $language->getOffset();
         }
-        //-- languages detect end
+        // languages detect end
         
-        $controllerName = (string) $url->get(0 + self::$offset);
-        $actionName      = (string) $url->get(1 + self::$offset);
+        $controllerName = (string) $url->get(0 + self::$offset, 'string');
+        $actionName      = (string) $url->get(1 + self::$offset, 'string');
 
         $controllerName = ($controllerName)? strtolower($controllerName) :  Config::get('default_controller');
         $actionName     = ($actionName)?       strtolower($actionName)     :   Config::get('default_action');
@@ -33,10 +64,10 @@ class App
                     'action'     => $actionName,
                    ));
     }
-    
 
     
     /**
+     * Инициализация приложения
      * Определение контроллера и действия
      * @param array(
                 'controller' => 'controllerName',
@@ -76,15 +107,15 @@ class App
             die("Контроллер <strong>$controllerName</strong> не найден!");
         }
     }
-    
-    
-    
+
+
     /**
      * Запуск приложения.
      * Визивается установленное действие контроллера.
-     * Формируется представление и подставляется в главный шаблон (layout)                
-     * @return готовая страница.
-     * */
+     * Формируется представление и подставляется в главный шаблон (layout)
+     * Вывод готовой страницы.
+     * @return void
+     */
     public static function run()
     {  
         $action     = self::$actionName;
@@ -99,17 +130,6 @@ class App
         
         print $controller->view->renderLayout();
         
-    }
-    
-    
-    /**
-     * запускается при завершении работы скрипта
-     * */   
-    public static function end()
-    {
-        //завершаем работу контроллера
-        $cont = new Controller();
-        $cont->end();
     }
 
 }

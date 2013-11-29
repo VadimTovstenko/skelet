@@ -1,12 +1,34 @@
 <?
+/**
+ * @author Anton Tovstenko
+ *
+ * Class Controller
+ * Супер-класс для определения базовых параметров,
+ * с которыми будут работать классы-наследники - контроллеры действий
+ */
 class Controller
 {
 
-    public $view;
-    public $model;
-    public $language;
 
-    public static $lang;
+    /**
+     * Экземпляр класса View
+     * Передает данные из контролера в шаблон представления
+     * Передача даных из контроллера реализована думя способами:
+     *      1. $this->view->assign('varName', $varValue);
+     *      2. $this->view->varName = $varValue;
+     * Управляет кешировашием страницы
+     * @var View
+     */
+    public $view;
+
+
+
+    /**
+     * Статическая переменная хранит значение текущего язика локали
+     * @var
+     */
+    private  static $lang;
+
 
 
     public function __construct() {
@@ -14,11 +36,16 @@ class Controller
         $this->view              = new View();
         $this->view->cache   = new Cache();
 
-        $this->language        = $this->getLanguage();
+        if ( isset( $_GET['clear_cache'] ) ) {
+            $this->view->cache->clear();
+        }
+
     }
 
 
     /**
+     * Установление текущего язика.
+     * Вызивается в процесе инициализации смещения Url-параметров в классе UrlOffsetLanguage
      * @param $lang
      */
     public static function setLanguage($lang){
@@ -27,6 +54,7 @@ class Controller
 
 
     /**
+     * Получение текущего язика
      * @return mixed
      */
     public function getLanguage(){
@@ -36,6 +64,7 @@ class Controller
 
 
     /**
+     * Построение правильного Url-адреса с учетом
      * @param array $params
      * @return string
      */
@@ -55,6 +84,7 @@ class Controller
 
 
     /**
+     * Перенаправление на указанный адрес
      * @param $url
      */
     public function redirect($url)
@@ -65,6 +95,8 @@ class Controller
 
 
     /**
+     * Функция, вызывающая указанное действие контроллера.
+     * !!! Запрещено вызивать текущее действие текущего контроллера
      * @param array $params
      */
     public function call(array $params)
@@ -74,15 +106,8 @@ class Controller
     }
 
 
-
-    public function end() 
-    {
-        $db = new Component_Db();
-        $db->close();
-    }
-
-
     /**
+     * Определение смещения Url-параметров в связи с добавлением параметра язика локали
      * @return int
      */
     private  function _getOffset()
@@ -95,6 +120,7 @@ class Controller
      * Получение параметров из адресной строки
      * отсчет начинается после Action, с нуля
      * @param $urlOffset
+     * @param null $type
      * @return bool
      */
     public function getUrlParam( $urlOffset, $type = null )
@@ -108,6 +134,16 @@ class Controller
         return $url->get( $urlOffset + $this->_getOffset() + $default_offset, $type);
     }
 
+
+
+    /**
+     * Завершение работы контроллера
+     * Закрытие соединения с БД
+     */
+    public function __destruct()
+    {
+        Component_Db::getInstance()->close();
+    }
 
 
 }

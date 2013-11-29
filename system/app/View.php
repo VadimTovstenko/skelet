@@ -1,46 +1,108 @@
 <?
+/**
+ * @author Anton Tovstenko
+ *
+ * Class View
+ * Супер-класс для генерации Html-страниц
+ * Принимает данные из контроллера действий
+ * Подставляет данные в шаблон
+ * формирует готовую страницу
+ */
 class View
 {
+
+    /**
+     * Название файла представления
+     * По умолчанию он определяетя как название Действия
+     * @var null
+     */
     private $view    = null;
+
+
+    /**
+     * Название файла обложки (основного шаблона)
+     * @var string
+     */
     private $layout  = 'main';
+
+
+    /**
+     * Массив данных, поступающих из контролера
+     * @var array
+     */
     private $data    = array();
+
+
+    /**
+     * Переменная для хранения готовой страницы представления
+     * @var string
+     */
     private $content;
 
+
+    /**
+     * Экземпляр класса Cache
+     * Определяется в процессе создания экземпляра класса View в главном контроллере
+     * @var null
+     */
     public  $cache   = null;
-    
-    
+
+
+    /**
+     * Определение основного шаблона
+     * По умолчанию 'main'
+     * @param $layout
+     */
     public function setLayout($layout)
     {
         $this->layout = $layout;
     }
-    
-    
+
+
+    /**
+     * Получение текущего названия основного шаблона
+     * @return string
+     */
     public function getLayout()
     {
         return $this->layout;
     }
 
 
-
+    /**
+     * Определение названия файла представления
+     * @param $view
+     */
     public function tpl($view)
     {
         $this->view = $view;
     }
-    
-    
-    public function assign($key,$val)
+
+
+    /**
+     * Передача данных из контроллера в шаблон
+     * @param $name
+     * @param $value
+     */
+    public function assign($name,$value)
     {
-        $this->data[$key] = $val;
+        $this->data[$name] = $value;
     }
-    
-    
+
+
+    /**
+     * Генерация представления
+     * Подстановка данных в представление
+     * @param $controllerName
+     * @param $actionName
+     */
     public function content( $controllerName, $actionName )
     {
         if(!isset($this->view)){
             $this->view = substr( $actionName, 0 , strpos( $actionName , 'Action' ) );
         }
         
-        $controllerName = substr( $controllerName , 0 , strpos( $controllerName , 'Controller' ) );
+        $controllerName = strtolower ( substr( $controllerName , 0 , strpos( $controllerName , 'Controller' ) ) );
         
         ob_start();
 
@@ -52,8 +114,12 @@ class View
         
         //return $this->content;
     }
-    
-    
+
+
+    /**
+     * Генерация всей страницы
+     * @return string
+     */
     public function renderLayout()
     {
         ob_start();
@@ -71,6 +137,7 @@ class View
 
 
     /**
+     * Магический метод, позволяющий получать данные в представлении через $this
      * @param $name
      * @return bool
      */
@@ -87,6 +154,7 @@ class View
 
 
     /**
+     * Магический метод, позволяющий записывать данние в представление через свойства его экземпляра
      * Аналог метода assign()
      * @param $name
      * @param $value
