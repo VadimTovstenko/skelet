@@ -13,7 +13,13 @@
     
 //Настройка сообщений об ошибках  
     ini_set("display_errors", DEBUG_MODE);
-    
+
+// Настройка относительных путей
+    set_include_path(implode(PATH_SEPARATOR, array(
+        ROOT.'/library',
+        get_include_path()
+    )));
+
     require_once(ROOT."/system/autoload.php");
 
 //Создаем приложение

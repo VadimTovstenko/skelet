@@ -1,0 +1,22 @@
+<h1><?echo $this->url; ?></h1>
+
+<input type="text" name="search_id"/>
+<button id="search">Search</button>
+
+<table class="users">
+    <tr>
+        <th>image</th>
+        <th>name</th>
+        <th>id</th>
+        <th>add</th>
+    </tr>
+    <? foreach($this->profiles as $profile) { ?>
+    <tr>
+        <td><img src="<? echo $profile->avatar ?>" width="30"></td>
+        <td><? echo $profile->name ?></td>
+        <td><? echo $profile->id ?></td>
+        <td><button class="ajax-gift" data-id='<? echo $profile->id ?>'>Дать подарок</button></td>
+    </tr>
+    <? } ?>
+
+</table>

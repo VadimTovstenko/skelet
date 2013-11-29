@@ -1,20 +1,32 @@
 <?
 class Config
 {
-    public $config = array();
+
+    private static $instance;
     
-    
-    public function __construct(){
-        require_once(ROOT."/config/config.php");
-        $this->config = $config;
-    }
-    
-    public function get($paramName) 
-    {   
-        if ( isset($this->config[$paramName]) ) {
-            return $this->config[$paramName];
+
+    public static function get($paramName)
+    {
+        if (!isset(self::$instance)) {
+            self::getInstance();
+        }
+
+        if ( isset(self::$instance[$paramName]) ) {
+            return self::$instance[$paramName];
         }
         return null;
     }
-    
+
+
+    public static function getInstance(){
+        if (!isset(self::$instance)) {
+            if(!file_exists(ROOT.'/config/config.php')) {
+                die('Конфиг не найден!');
+            }
+            require_once(ROOT."/config/config.php");
+            self::$instance = $config;
+
+        }
+        return self::$instance;
+    }
 }

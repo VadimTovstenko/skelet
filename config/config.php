@@ -3,17 +3,21 @@
 //Конфигурация
 
     $config = array(
-        
+
+        'cache'  => true,
+
         'db' => array(
-            'location'      => "localhost",
-            'user'          => "ani",
-            'pass'          => "wtVngqxn",
+            'location'       => "localhost",
+            'user'            => "ani",
+            'pass'           => "wtVngqxn",
             'name'          => "lipton_hash",
             'charset'       => "CP1251",
-            'show_error'    => DEBUG_MODE,
+            'show_error'  => DEBUG_MODE,
+            'cache_size'  => 33554432
         ),
+
         
-        'default_controller'    => 'index',
+        'default_controller'    => 'users',
         'default_action'        => 'index',
         
         'languages'    => array(

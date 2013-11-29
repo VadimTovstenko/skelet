@@ -2,7 +2,14 @@
 class Model
 {
     private $_dir = '/model/';
-    
+
+    protected  $db;
+
+    public function __construct()
+    {
+        $this->db = new Component_Db();
+    }
+
     // Созданные объекты
 	private static $objects = array();
     

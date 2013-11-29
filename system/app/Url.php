@@ -6,7 +6,7 @@
   
 class Url
 {   
-    public function get($section = null)
+    public function get($section = null, $type = null)
     {
         $uri = array();
         
@@ -31,8 +31,17 @@ class Url
         if(isset($uri[4])) { $pos = strrpos($uri[4], "?"); if ($pos === false) { $uri[4] = $this->sanitizeURL($uri[4]); } else { $uri[4] = $this->sanitizeURL(substr($uri[4], 0, $pos)); } }
         if(isset($uri[5])) { $pos = strrpos($uri[5], "?"); if ($pos === false) { $uri[5] = $this->sanitizeURL($uri[5]); } else { $uri[5] = $this->sanitizeURL(substr($uri[5], 0, $pos)); } }
 
-        if(isset($section) && isset($uri[$section]))
+        if(isset($section) && isset($uri[$section])) {
+
+            if($type == 'string' || $type == 'str')
+                return strval(preg_replace('/[^\p{L}\p{Nd}\d\s_\-\.\%\s]/ui', '', $uri[$section]));
+
+            if($type == 'integer' || $type == 'int')
+                return intval($uri[$section]);
+
             return $uri[$section];
+        }
+
         elseif(!empty($uri))
             return false;
         else    

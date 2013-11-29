@@ -2,53 +2,41 @@
 
 class indexController extends Controller
 {    
-    private $init;
-    
+
     //вместо конструктора
     public function init(){
-        $this->init = 'init';
+        $this->view->assign('controller',$this);
     }
     
     public function indexAction()
     {
-        //App::init(array('controller' => 'index', 'action' => 'edit'));
-        //App::run();
+
+        //$this->call(array('controller' => 'index', 'action' => 'edit'));
         //return;
-        
-        $sql   = new Component_Sql();
-        
-        $user  = $this->model->users;
+
+        $model = new Model();
+        $user  = $model->users;
          
-        $this->view->assign('title','Trololo');
-        $this->view->assign('name',$user->test());
-        $this->view->assign('url',$this->createUrl(array('index','edit')));     
+        $this->view->assign('title','Demo Engine');
+        $this->view->assign('users',$user->getAllUsers());
     }
     
     public function editAction()
     {
-        $name = 'Anton';
-        
+
         $model = new Model();
-        $user  = $this->model->users;  
-        //$db    = $this->model->db;
-         
-        //$db->query('SELECT NOW() as now');
-        
-        $this->view->tpl('index');
          
         $this->view->assign('title','Edit');
         $this->view->assign('action','edit');
-       // $this->view->assign('name',$db->result()->now);
         $this->view->assign('lang',$this->language);
-        $this->view->assign('url',$this->createUrl(array('index','edit')));
-        
-        //$this->view->setLayout('test');
+
     }
     
     public function ajaxAction()
     {
-        if($this->request->isAjax()){
-            echo 'adasdasds';
+        $request = new Component_Request();
+        if($request->isAjax()){
+            echo 'clalled by Ajax';
             exit; 
         }
         

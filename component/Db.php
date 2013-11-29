@@ -5,16 +5,13 @@ class Component_Db
     private $db_pass;
     private $db_name;
     private $db_location;
+    private $cache_size;
     private $charset;
     private $show_error;
-    private $config;
     
     private $db_id = false;
     public  $res_id = '';
     private $connected = false;
-    private $temp = '';
-    public $select;
-    public $data = array();
     
 
     
@@ -29,10 +26,8 @@ class Component_Db
         // При повторном вызове возвращаем существующий линк
 		if(!empty($this->db_id))
 			return $this->db_id;
-            
-        if(!file_exists(ROOT.'/config/config.php'))
-            die('Конфиг не найден!');
-        include ROOT.'/config/config.php';
+
+        $config = Config::getInstance();
          
         if(!is_array($config['db']))
            return false;
@@ -43,6 +38,7 @@ class Component_Db
         $this->charset = $config['db']['charset'];
         $this->db_location = $config['db']['location'];
         $this->show_error  = $config['db']['show_error'];
+        $this->cache_size  = $config['db']['cache_size'];
        
         if(!$this->db_id = @mysql_connect($this->db_location, $this->db_user, $this->db_pass)) {
 			if($this->show_error == 1) { 
@@ -60,12 +56,14 @@ class Component_Db
 			}
 		}
         
-        if($this->charset)
-        {
+        if($this->charset) {
             mysql_query("SET NAMES $this->charset");
-            mysql_query('SET TIME_ZONE=\'+3:00\'');
         }
-        
+
+        mysql_query('SET TIME_ZONE=\'+3:00\'');
+        mysql_query('SET GLOBAL query_cache_size = '.$this->cache_size);
+
+
         $this->connected = true;
 		return $this->db_id;
 	}
@@ -137,37 +135,6 @@ class Component_Db
 		else
 			return $row;
 	}
-    
-    
-    
-    public function get_assoc()
-    {
-        if(!$this->res_id) 
-           		
-            $this->display_error(mysql_error(), mysql_errno(), $query);	
-            
-        else 
-        {
-            unset($this->data);
-            
-            while( $this->temp = mysql_fetch_assoc($this->res_id) )
-            {
-                $this->data[] = $this->temp;
-            }
-            
-        }
-            
-            if(isset($this->data))
-                
-                return $this->data;
-    }
-    
-    
-    public function data_assoc($query, $show_error = true)
-    {    
-        $this->query($query, $show_error);
-        return $this->get_assoc();
-    }
 
 	
     /**

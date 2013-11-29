@@ -7,12 +7,17 @@ function __autoload($className)
     $className  = str_replace('_','/',$className,$count);
     
     if($count > 0) {
-        $class_path = lcfirst($className).".php";
+        if(strpos($className, 'Zend') === 0) {
+            $class_path = 'library/'.$className.'.php';
+        } else {
+            $class_path = lcfirst($className).".php";
+        }
+
     }
     else {
         $class_path = 'system/app/'.$className.".php";
     }
-
+//echo $class_path.'<br/>';
     if(file_exists(ROOT.'/'.$class_path))
         require_once(ROOT.'/'.$class_path);
 }

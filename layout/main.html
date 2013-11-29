@@ -12,18 +12,30 @@
     
     <script type="text/javascript" src="/design/js/jquery-1.10.2.min.js"></script> 
 
-    <title><? echo $this->title?></title>
+    <title><? echo $this->title ?></title>
     
 </head>
 
 <body>
     
-    <div class="wrapper">  
-            <? echo $this->content ?>
-    </div>
-    
+    <div class="wrapper">
+            <div class="container">
 
-    
+                <ul class="main-menu">
+                    <li><a href="<? echo  $this->controller->createUrl(array('users','index')) ?>">Home</a></li>
+                    <li><a href="<? echo  $this->controller->createUrl(array('users','edit','id','231')) ?>">Edit</a></li>
+                    <li><a href="<? echo  $this->controller->createUrl(array('contacts','')) ?>">Contacts</a></li>
+                </ul>
+                <ul id="languages">
+                    <? foreach($this->languages as $k=>$lang) { ?>
+                        <li><a href="/<? echo $lang.substr($_SERVER['REQUEST_URI'],3)?>"><? echo $lang?></a></li>
+                    <? } ?>
+                </ul>
+                <div class="content"> <? echo $this->content ?></div>
+            </div>
+    </div>
+
+
 </body>
 <script type="text/javascript" src="/design/js/common.js"></script> 
 </html>

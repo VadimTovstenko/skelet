@@ -1,6 +1,16 @@
-<h1><?echo $this->name; ?></h1>
 <h1><?echo $this->url; ?></h1>
-<h1><?echo $this->action; ?></h1>
-<pre>
-<?print_r($this->lang)?>
-</pre>
+
+<button id="ajax-test">Ajax test</button>
+
+<p>
+    <? echo  $this->controller->createUrl(array('index','edit')) ?>
+</p>
+
+<table>
+    <? foreach($this->users as $user) { ?>
+    <tr>
+        <td><? echo $user->id ?></td>
+        <td><? echo $user->user_id ?></td>
+    </tr>
+    <? } ?>
+</table>

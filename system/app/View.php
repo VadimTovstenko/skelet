@@ -5,6 +5,8 @@ class View
     private $layout  = 'main';
     private $data    = array();
     private $content;
+
+    public  $cache   = null;
     
     
     public function setLayout($layout)
@@ -32,16 +34,16 @@ class View
     }
     
     
-    public function content($controllerName,$actionName)
+    public function content( $controllerName, $actionName )
     {
         if(!isset($this->view)){
-            $this->view = substr($actionName,0,strpos($actionName,'Action'));
+            $this->view = substr( $actionName, 0 , strpos( $actionName , 'Action' ) );
         }
         
-        $controllerName = substr($controllerName,0,strpos($controllerName,'Controller'));
+        $controllerName = substr( $controllerName , 0 , strpos( $controllerName , 'Controller' ) );
         
         ob_start();
-        
+
         include ROOT.'/view/'.$controllerName.'/'.$this->view.'.html';
         
         $this->content = ob_get_contents();
@@ -55,19 +57,24 @@ class View
     public function renderLayout()
     {
         ob_start();
-        
+
         include ROOT.'/layout/'.$this->layout.'.html';
         
         $res = ob_get_contents();
+
+        $this->cache->setCache($res);
 
         ob_end_clean();
         
         return $res;
     }
-    
-    
-    
-    public function __get($name)
+
+
+    /**
+     * @param $name
+     * @return bool
+     */
+    public function __get( $name )
     {
         if (array_key_exists($name, $this->data)) {
             return $this->data[$name];
@@ -75,6 +82,18 @@ class View
         else {
             return false;
         }
+    }
+
+
+
+    /**
+     * Аналог метода assign()
+     * @param $name
+     * @param $value
+     */
+    public function __set ( $name , $value )
+    {
+        $this->data[$name] = $value;
     }
 
 }

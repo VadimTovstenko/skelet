@@ -4,30 +4,29 @@ class App
     
     private static $controller;
     private static $actionName;
-    
+
+    public static $offset = 0;
     
     public function __construct()
     {      
-        $url    = new Url();
-        $config = new Config();
+        $url   = new Url();
 
         //-- languages detect 
-        $lanCfg = $config->get('languages');
-        $offset  = 0;
+        $lanCfg = Config::get('languages');
         // если включена мультиязичность
         if($lanCfg['status'] === true) {
             
             $language = new Language();
-            $language->init($lanCfg,$url);
-            $offset   = $language->getOffset();
+            $language->init( $lanCfg, $url );
+            self::$offset   = $language->getOffset();
         }
         //-- languages detect end
         
-        $controllerName = (string) $url->get(0 + $offset);
-        $actionName      = (string) $url->get(1 + $offset);
-        
-        $controllerName = ($controllerName)? strtolower($controllerName) : $config->get('default_controller');
-        $actionName     = ($actionName)?       strtolower($actionName)     : $config->get('default_action');
+        $controllerName = (string) $url->get(0 + self::$offset);
+        $actionName      = (string) $url->get(1 + self::$offset);
+
+        $controllerName = ($controllerName)? strtolower($controllerName) :  Config::get('default_controller');
+        $actionName     = ($actionName)?       strtolower($actionName)     :   Config::get('default_action');
             
         self::init(array(
                     'controller' => $controllerName,

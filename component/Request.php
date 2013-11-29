@@ -5,7 +5,7 @@
  * @author 	Anton Tovstenko
  */
 
-class Request
+class Component_Request
 {
 
 	/**
@@ -21,7 +21,8 @@ class Request
    
     /**
      * определение аякс запроса
-     * */ 
+     * @return bool
+     */
     public function isAjax(){
         
         if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
@@ -75,11 +76,14 @@ class Request
     	return $val;
     }
 
-	/**
-	* Возвращает переменную _POST, отфильтрованную по заданному типу, если во втором параметре указан тип фильтра
-	* Второй параметр $type может иметь такие значения: integer, string, boolean
-	* Если $type не задан, возвращает переменную в чистом виде
-	*/
+    /**
+     * Возвращает переменную _POST, отфильтрованную по заданному типу, если во втором параметре указан тип фильтра
+     * Второй параметр $type может иметь такие значения: integer, string, boolean
+     * Если $type не задан, возвращает переменную в чистом виде
+     * @param null $name
+     * @param null $type
+     * @return bool|int|null|string
+     */
     public function post($name = null, $type = null)
     {
     	$val = null;
@@ -153,10 +157,11 @@ class Request
 		return true;
     }
 
-	
-	/**
-	* URL
-	*/
+
+    /**
+     * @param array $params
+     * @return string
+     */
     public function url($params = array())
     {
 		$url = parse_url($_SERVER["REQUEST_URI"]);
