@@ -7,11 +7,9 @@ function __autoload($className)
     $className  = str_replace('_','/',$className,$count);
 //  echo $className.'<br>';
     if($count > 0) {
-        if(strpos($className, 'Zend') === 0) {
-            $class_path = 'library/'.$className.'.php';
-        } else {
-            $class_path = lcfirst($className).".php";
-        }
+
+            $class_path = strtolower($className).".php";
+            $class_path = substr($class_path,0,strripos($class_path,'/')+1).ucfirst(substr($class_path,strripos($class_path,'/')+1));
 
     }
     else {
@@ -23,7 +21,7 @@ function __autoload($className)
 }
 
 
-register_shutdown_function('work_time');
+//register_shutdown_function('work_time');
 
 // функция опеределния времени работы скрипта 
 function work_time() 

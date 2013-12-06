@@ -28,17 +28,17 @@ class UrlOffsetLanguage
                 
         if($url->get(0)) {
            
-            if(in_array($url->get(0),$config['list'])){
+            if( in_array( $url->get(0), $config->list ) ) {
                 $this->offset   = 1;
                 $language = $url->get(0);
             }
             else {
                 $this->offset   = 0;
-                $language = $config['default'];
+                $language = $config->default;
             }  
         } 
         else {
-            $language = $config['default'];
+            $language = $config->default;
         }
         
         Controller::setLanguage($language);

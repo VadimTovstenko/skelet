@@ -1,6 +1,4 @@
 
-
-//intro Class
 var mainClass = function(){
 
     this.init = function(){
@@ -31,6 +29,7 @@ function search()
         }
     });
 }
+
 function gift_ajax() {
 
     var pid = $(this).attr('data-id');

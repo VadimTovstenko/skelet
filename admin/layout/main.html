@@ -1,0 +1,66 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; windows-1251">
+    <title><?=$_SERVER["HTTP_HOST"];?> | Управление сайтом</title>
+
+    <link rel="stylesheet" type="text/css" href="/admin/design/css/admin_style.css" />
+    <link rel="stylesheet" type="text/css" href="/admin/design/css/jqueryslidemenu.css" />
+    <link rel="stylesheet" type="text/css" href="/admin/design/css/modal.css" />
+    <!--[if IE 8]><link rel="stylesheet" type="text/css" href="/admin/css/IE8.css" /><![endif]-->
+
+    <link rel="shortcut icon" href="/admin/design/img/favicon.ico">
+
+    <script type="text/javascript" src="/admin/design/js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/admin/design/js/jquery.form.js"></script>
+    <script type="text/javascript" src="/admin/design/js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="/admin/design/js/jquery.livequery.js"></script>
+    <script type="text/javascript" src="/admin/design/js/jquery.tablesorter.min.js"></script>
+    <script type="text/javascript" src="/admin/design/js/jquery.tablesorter.pager.js"></script>
+    <script type="text/javascript" src="/admin/design/js/modal.js"></script>
+    <script type="text/javascript" src="/admin/design/js/common.js"></script>
+    <!--[if gte IE 9]>
+    <style type="text/css">
+        .gradient {
+            filter: none;
+        }
+    </style>
+    <![endif]-->
+    <!--[if lt IE 7]>
+    <script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE7.js"></script>
+    <![endif]-->
+
+
+</head>
+
+<body>
+<div class="top"><div class="header_title"><a  href="/"><?=$_SERVER["HTTP_HOST"];?></a> | ADMINISTRATION<span>v3.0</span></div> </div>
+<div class="wrapper">
+
+    <? if ($this->controller->ident->isAuth()) { ?>
+        <div style="<?=($page=="index")? 'opacity:0;':""; ?>" id="mainMenu">
+            <div id="myslidemenu" class="jqueryslidemenu">
+                <ul>
+                    <li><a href="/admin/">Ящики</a></li>
+                    <li><a href="/admin/index/mag">Магниты</a></li>
+                </ul>
+            </div>
+            <div id="myslidemenu" class="jqueryslidemenu" style="float: right;">
+                <ul>
+                    <li><a href="/admin/settings/"  id="getCookie">Настройки</a></li>
+                    <li><a href="/admin/auth/logout">Выход</a></li>
+                </ul>
+            </div>
+        </div>
+        <div style="clear: both;"></div>
+    <? } ?>
+
+    <div class="content"> <? echo $this->content ?></div>
+</div>
+
+
+<div id="fade"></div>
+</body>
+</html>
+
+
+

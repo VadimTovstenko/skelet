@@ -40,28 +40,28 @@ class App
      */
     public function __construct()
     {      
-        $url   = new Url();
+        $url = new Url();
 
         // languages detect
         $lanCfg = Config::get('languages');
         // если включена мультиязичность
-        if($lanCfg['status'] === true) {
+        if($lanCfg->status === true) {
             
             $language = new UrlOffsetLanguage();
             $language->init( $lanCfg, $url );
-            self::$offset   = $language->getOffset();
+            self::$offset = $language->getOffset();
         }
         // languages detect end
         
-        $controllerName = (string) $url->get(0 + self::$offset, 'string');
+        $controllerName	= (string) $url->get(0 + self::$offset, 'string');
         $actionName      = (string) $url->get(1 + self::$offset, 'string');
 
-        $controllerName = ($controllerName)? strtolower($controllerName) :  Config::get('default_controller');
-        $actionName     = ($actionName)?       strtolower($actionName)     :   Config::get('default_action');
+        $controllerName = ($controllerName)? strtolower($controllerName)	:  Config::get('default_controller');
+        $actionName     	= ($actionName)?       strtolower($actionName)   	:  Config::get('default_action');
             
         self::init(array(
                     'controller' => $controllerName,
-                    'action'     => $actionName,
+                    'action'     	=> $actionName,
                    ));
     }
 
@@ -70,8 +70,8 @@ class App
      * Инициализация приложения
      * Определение контроллера и действия
      * @param array(
-                'controller' => 'controllerName',
-                'action'     => 'actionName',
+                'controller'	=> 'controllerName',
+                'action'     	=> 'actionName',
                 )
      * */
     public static function init(array $params)
@@ -80,10 +80,10 @@ class App
             die("Неправилно указаны праметры");
         }
         
-        $controllerName  = $params['controller'];
+        $controllerName	= $params['controller'];
         $actionName      = $params['action'];
         
-        $controllerPath  = ROOT."/controller/".$controllerName."Controller.php";
+        $controllerPath  	= ROOT."/controller/".$controllerName."Controller.php";
 
         if(file_exists($controllerPath))
         {   
@@ -96,15 +96,18 @@ class App
                 self::$actionName = $actionName."Action";
                         
                 if (!method_exists(self::$controller,self::$actionName)) {
-                    die("Метод <strong>$actionName</strong> не найден!");
+                    self::init(array('controller' =>'error', 'action' => 'index'));
+                    Errors::add('method', "Метод <strong>$actionName</strong> не найден!");
                 }
             }   
             else {
-                die("Класс <strong>$className</strong> не найден!");
+                self::init(array('controller' =>'error', 'action' => 'index'));
+                Errors::add('class', "Класс <strong>$className</strong> не найден!");
             }
         }
         else {
-            die("Контроллер <strong>$controllerName</strong> не найден!");
+            self::init(array('controller' =>'error', 'action' => 'index'));
+            Errors::add('controller', "Контроллер <strong>$controllerName</strong> не найден!");
         }
     }
 
@@ -118,7 +121,7 @@ class App
      */
     public static function run()
     {  
-        $action     = self::$actionName;
+        $action     	= self::$actionName;
         $controller = self::$controller;
         
         if(method_exists($controller,'init')) {

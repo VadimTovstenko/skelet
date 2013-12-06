@@ -101,8 +101,8 @@ class View
         if(!isset($this->view)){
             $this->view = substr( $actionName, 0 , strpos( $actionName , 'Action' ) );
         }
-        
-        $controllerName = strtolower ( substr( $controllerName , 0 , strpos( $controllerName , 'Controller' ) ) );
+
+        $controllerName = strtolower( substr( $controllerName , 0 , strpos( $controllerName , 'Controller' ) ) );
         
         ob_start();
 

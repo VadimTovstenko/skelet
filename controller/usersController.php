@@ -6,23 +6,13 @@ class UsersController extends Controller
     //вместо конструктора
     public function init(){
         $this->view->assign('controller',$this);
-        $this->view->assign('languages', Config::get('languages')['list']);
+        $this->view->assign('languages', Config::get('languages')->list);
 
     }
 
     public function indexAction()
     {
 
-        $this->view->cache->getCache();
-
-        //$this->call(array('controller' => 'index', 'action' => 'edit'));
-        //return;
-
-        $model = new Model();
-        $profile = $model->profile;
-
-        $this->view->assign('title','Demo Engine');
-        $this->view->profiles = $profile->getAllProfiles();
 
     }
 
@@ -31,6 +21,12 @@ class UsersController extends Controller
         //$this->view->cache->clear();
 
         $id = $this->getUrlParam(1,'int');
+
+        if($id == 123)
+            Errors::error404();
+
+
+
         $this->view->assign( 'title' , 'Edit' );
         $this->view->assign( 'name', $id );
 
@@ -53,7 +49,25 @@ class UsersController extends Controller
         }
 
         exit;
+    }
 
+
+    public function magAction()
+    {
+        $request = new Component_Request();
+        if ( $request->isAjax() ) {
+
+            $sid = $request->get('sid');
+
+            $model = new Model();
+            $images = $model->images;
+
+            if($images->setGift($sid)){
+                echo  'ok!';
+            }
+        }
+
+        exit;
     }
 
     public function searchAction()
@@ -81,5 +95,28 @@ class UsersController extends Controller
         exit;
     }
 
+
+    public function searchMagAction()
+    {
+        $request = new Component_Request();
+        if($request->isAjax())
+        {
+            $sid = $request->get('sid');
+
+            $model = new Model();
+            $images = $model->images;
+
+            if($data =  $images->getImage($sid))
+            {
+                echo json_encode(array(
+                    'image' => $data->src,
+                    'sid'    => $data->soc_id
+                ));
+            }
+
+        }
+
+        exit;
+    }
 
 }

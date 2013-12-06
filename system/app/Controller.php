@@ -1,10 +1,10 @@
 <?
 /**
- * @author Anton Tovstenko
- *
  * Class Controller
  * Супер-класс для определения базовых параметров,
  * с которыми будут работать классы-наследники - контроллеры действий
+ *
+ * @author Anton Tovstenko
  */
 class Controller
 {
@@ -33,14 +33,16 @@ class Controller
 
     public function __construct() {
 
-        $this->view              = new View();
-        $this->view->cache   = new Cache();
+        $this->view            	= new View();
+        $this->view->cache   	= new Cache();
+        $this->view->title     	= Config::getInstance()->title;
 
         if ( isset( $_GET['clear_cache'] ) ) {
             $this->view->cache->clear();
         }
 
     }
+
 
 
     /**

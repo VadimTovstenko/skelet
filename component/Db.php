@@ -17,7 +17,6 @@ class Component_Db
     
     public function __construct()
     {
-        //parent::__construct();
         $this->connect();
     }
 
@@ -41,16 +40,16 @@ class Component_Db
 
         $config = Config::getInstance();
          
-        if(!is_array($config['db']))
+        if(!$config->db)
            return false;
         
-        $this->db_user = $config['db']['user'];
-        $this->db_pass = $config['db']['pass'];
-        $this->db_name = $config['db']['name'];
-        $this->charset = $config['db']['charset'];
-        $this->db_location = $config['db']['location'];
-        $this->show_error  = $config['db']['show_error'];
-        $this->cache_size  = $config['db']['cache_size'];
+        $this->db_user = $config->db->user;
+        $this->db_pass = $config->db->pass;
+        $this->db_name = $config->db->name;
+        $this->charset = $config->db->charset;
+        $this->db_location = $config->db->location;
+        $this->show_error  = $config->db->show_error;
+        $this->cache_size  = $config->db->cache_size;
        
         if(!$this->db_id = @mysql_connect($this->db_location, $this->db_user, $this->db_pass)) {
 			if($this->show_error == 1) { 
