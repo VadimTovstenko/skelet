@@ -6,7 +6,7 @@
  * Синглтон
  * Класс для получения параметров из конфигурационного файла
  */
-class Config
+class System_Config
 {
 
     private static $instance;

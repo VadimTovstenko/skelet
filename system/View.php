@@ -1,14 +1,14 @@
 <?
 /**
- * @author Anton Tovstenko
- *
  * Class View
  * —упер-класс дл€ генерации Html-страниц
  * ѕринимает данные из контроллера действий
  * ѕодставл€ет данные в шаблон
  * формирует готовую страницу
+ *
+ * @author Anton Tovstenko
  */
-class View
+class System_View
 {
 
     /**

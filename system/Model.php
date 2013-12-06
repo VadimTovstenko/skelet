@@ -4,12 +4,12 @@
  * Создает подключение к БД
  * Дает доступ к моделям через свойства екземпляка класса
  *      Пример:
- *      $model = new Model();
+ *      $model = new System_Model();
  *      $users = $model->users;
  *
- * @author Anton Tovstenko
+ * @author Anton Tovstenko *
  */
-class Model
+class  System_Model
 {
 
     /**
@@ -70,5 +70,6 @@ class Model
 		// Возвращаем созданный объект
 		return self::$objects[$name];
 	}   
-    
+
+
 }

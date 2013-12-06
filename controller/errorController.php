@@ -1,15 +1,15 @@
 <?
-class ErrorController extends Controller
+class ErrorController extends System_Controller
 {
 
     public function indexAction()
     {
 
-        if ( Errors::isErrors() ) {
+        if ( System_Errors::isErrors() ) {
 
             if ( DEBUG_MODE ) {
 
-                foreach( Errors::getAll() as $name => $mess) {
+                foreach( System_Errors::getAll() as $mess) {
                     echo $mess.'<br/>';
                 }
 
@@ -28,4 +28,8 @@ class ErrorController extends Controller
         $this->view->setLayout('error');
     }
 
+	public function error403Action()
+	{
+		$this->view->setLayout('error');
+	}
 }

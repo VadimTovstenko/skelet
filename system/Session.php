@@ -5,7 +5,7 @@
  * Class Session
  * Класс для работы с сессионным массивом
  */
-class Session
+class System_Session
 {
 
     /**

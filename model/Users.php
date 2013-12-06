@@ -1,7 +1,7 @@
 <?
-class Users extends Model
+class Users extends System_Model
 {
-    private $_table = 'users_data';
+    public  $_table = 'users_data';
     public  $social;
     public  $user_id;
     public  $avatar;

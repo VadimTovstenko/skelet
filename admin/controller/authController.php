@@ -1,5 +1,5 @@
 <?
-class AuthController extends Controller
+class AuthController extends Admin_System_Controller
 {
 
     public function init() {
@@ -25,7 +25,11 @@ class AuthController extends Controller
 
 
             if ($login == 'admin' && $pass == 'admin') {
-                $this->ident->login();
+
+				$this->ident->login();
+
+				$this->ident->setAccess(System_Config::get('access')->admin);
+
                 $this->redirect('/admin');
             }
 

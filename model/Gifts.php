@@ -2,7 +2,7 @@
 /**
  * модель подарков пользователя
  * */
-class Gifts extends Model
+class Gifts extends System_Model
 {
     private $_table = 'gifts';
 

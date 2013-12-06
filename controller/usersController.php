@@ -1,18 +1,17 @@
 <?
 
-class UsersController extends Controller
+class UsersController extends System_Controller
 {
 
     //вместо конструктора
     public function init(){
         $this->view->assign('controller',$this);
-        $this->view->assign('languages', Config::get('languages')->list);
+        $this->view->assign('languages',  System_Config::get('languages')->list);
 
     }
 
     public function indexAction()
     {
-
 
     }
 
@@ -23,9 +22,7 @@ class UsersController extends Controller
         $id = $this->getUrlParam(1,'int');
 
         if($id == 123)
-            Errors::error404();
-
-
+			Sys::error404();
 
         $this->view->assign( 'title' , 'Edit' );
         $this->view->assign( 'name', $id );
@@ -39,7 +36,7 @@ class UsersController extends Controller
 
             $pid = $request->get('pid');
 
-            $model = new Model();
+            $model = new System_Model();
             $gifts = $model->gifts;
 
             if($gifts->setGift($pid,'lit')){
@@ -59,7 +56,7 @@ class UsersController extends Controller
 
             $sid = $request->get('sid');
 
-            $model = new Model();
+            $model = new System_Model();
             $images = $model->images;
 
             if($images->setGift($sid)){
@@ -77,7 +74,7 @@ class UsersController extends Controller
         {
             $pid = $request->get('pid');
 
-            $model = new Model();
+            $model = new System_Model();
             $profile = $model->profile;
 
 
@@ -103,7 +100,7 @@ class UsersController extends Controller
         {
             $sid = $request->get('sid');
 
-            $model = new Model();
+            $model = new System_Model();
             $images = $model->images;
 
             if($data =  $images->getImage($sid))

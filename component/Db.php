@@ -38,7 +38,7 @@ class Component_Db
 		if(!empty($this->db_id))
 			return $this->db_id;
 
-        $config = Config::getInstance();
+        $config =  System_Config::getInstance();
          
         if(!$config->db)
            return false;
@@ -80,7 +80,11 @@ class Component_Db
 	}
    
     public function close(){
-        mysql_close($this->db_id);
+
+		if (is_resource($this->db_id)) {
+			mysql_close($this->db_id);
+		}
+
     }
     
    

@@ -10,15 +10,9 @@ define("ROOT", $_SERVER["DOCUMENT_ROOT"]);
 //Настройка сообщений об ошибках
 ini_set("display_errors", DEBUG_MODE);
 
-// Настройка относительных путей
-set_include_path(implode(PATH_SEPARATOR, array(
-    ROOT.'/library',
-    get_include_path()
-)));
-
-require_once(ROOT."/admin/system/_autoload.php");
+require_once(ROOT."/system/_autoload.php");
 
 //Создаем приложение
-$app = new Admin();
-$app::run();
+$admin_app = new Admin_System_App();
+$admin_app::run();
 

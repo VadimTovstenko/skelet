@@ -1,6 +1,6 @@
 <?
 
-class indexController extends Controller
+class indexController extends Admin_System_Controller
 {
 
     public function init(){
@@ -19,7 +19,7 @@ class indexController extends Controller
     {
         $this->view->legend = Admin_Widget_Legend::get('Редактирование подарков', 'Магниты','23','qwew');
 
-		$model 	= new Model();
+		$model 	= new System_Model();
 		$images	= $model->images;
 		$this->view->images 	= $images->getWinImages();
     }

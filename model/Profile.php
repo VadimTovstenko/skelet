@@ -1,5 +1,5 @@
 <?
-class Profile extends Model
+class Profile extends System_Model
 {
     private $_table = 'users_profile';
 

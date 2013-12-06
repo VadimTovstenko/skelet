@@ -6,7 +6,7 @@
  *
  * @author Anton Tovstenko
  */
-class Controller
+class System_Controller
 {
 
 
@@ -33,9 +33,9 @@ class Controller
 
     public function __construct() {
 
-        $this->view            	= new View();
-        $this->view->cache   	= new Cache();
-        $this->view->title     	= Config::getInstance()->title;
+        $this->view            	= new System_View();
+        $this->view->cache   	= new System_Cache();
+        $this->view->title     	=  System_Config::getInstance()->title;
 
         if ( isset( $_GET['clear_cache'] ) ) {
             $this->view->cache->clear();
@@ -103,8 +103,8 @@ class Controller
      */
     public function call(array $params)
     {
-        App::init($params);
-        App::run();
+		System_App::init($params);
+		System_App::run();
     }
 
 
@@ -114,7 +114,7 @@ class Controller
      */
     private  function _getOffset()
     {
-        return App::$offset;
+        return System_App::$offset;
     }
 
 
@@ -132,7 +132,7 @@ class Controller
          * @var $default_offset int */
         $default_offset = 2;
 
-        $url = new Url();
+        $url = new System_Url();
         return $url->get( $urlOffset + $this->_getOffset() + $default_offset, $type);
     }
 

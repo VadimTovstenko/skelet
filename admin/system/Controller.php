@@ -6,7 +6,7 @@
  * Супер-класс для определения базовых параметров,
  * с которыми будут работать классы-наследники - контроллеры действий
  */
-class Controller
+class Admin_System_Controller
 {
 
 
@@ -35,10 +35,9 @@ class Controller
 
     public function __construct() {
 
-        $this->view   = new View();
-
-        $this->ident = new Admin_Component_Identity();
-        $url    = new Url();
+        $this->view   	= new Admin_System_View();
+        $this->ident 	= new Admin_Component_Identity();
+        $url    			= new System_Url();
 
         if ( !$this->ident->isAuth() && $url->get(1) != 'login') {
             $this->redirect('/admin/auth/login');

@@ -1,5 +1,5 @@
 <?
-class Images extends Model
+class Images extends System_Model
 {
     private $_table = 'images';
 

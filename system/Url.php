@@ -1,10 +1,10 @@
 <?
 /**
- * @author Anton Tovstenko
- *
  * Класс-обертка для обращения к адресной строке
+ *
+ * @author Anton Tovstenko
  */
-class Url
+class System_Url
 {
 
     /**

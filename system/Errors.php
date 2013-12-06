@@ -5,7 +5,7 @@
  * Class Errors
  * Класс для работы с ошибками
  */
-class Errors
+class  System_Errors
 {
 
     /**
@@ -70,10 +70,17 @@ class Errors
      */
     public static function error404()
     {
-        Admin::init(array('controller' =>'error', 'action' => 'error404'));
-        Admin::run();
+		System_App::init(array('controller' =>'error', 'action' => 'error404'));
+		System_App::run();
         exit;
     }
+
+	public static function error403()
+	{
+		System_App::init(array('controller' =>'error', 'action' => 'error403'));
+		System_App::run();
+		exit;
+	}
 
 
 }

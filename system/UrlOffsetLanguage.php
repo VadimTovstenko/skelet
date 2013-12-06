@@ -1,12 +1,12 @@
 <?
 /**
- * @author Anton Tovstenko
- *
  * Class UrlOffsetLanguage
  * Определяет смещение Url-параметров
  * Определяет текущий язык локали
+ *
+ * @author Anton Tovstenko
  */
-class UrlOffsetLanguage
+class System_UrlOffsetLanguage
 {
 
 
@@ -40,8 +40,8 @@ class UrlOffsetLanguage
         else {
             $language = $config->default;
         }
-        
-        Controller::setLanguage($language);
+
+		System_Controller::setLanguage($language);
         
         return $this->offset;
 

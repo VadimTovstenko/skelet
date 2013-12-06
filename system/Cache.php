@@ -1,11 +1,11 @@
 <?
 /**
- *  @author 	Anton Tovstenko
- *
  * Class Cache
  * Класс для кеширования страниц
+ *
+ *  @author 	Anton Tovstenko
  */
-class Cache
+class System_Cache
 {
 
     /**
@@ -30,7 +30,7 @@ class Cache
     public function  setCache($content)
     {
 
-        if ( !Config::get('cache')  || !$this->enable ) {
+        if ( !System_Config::get('cache')  || !$this->enable ) {
             return false;
         }
 

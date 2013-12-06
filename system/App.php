@@ -8,7 +8,7 @@
  * Определяет Контроллер и вызывает Действие
  * Выводит готовую страницу
  */
-class App
+class System_App
 {
 
 
@@ -40,14 +40,14 @@ class App
      */
     public function __construct()
     {      
-        $url = new Url();
+        $url = new System_Url();
 
         // languages detect
-        $lanCfg = Config::get('languages');
+        $lanCfg = System_Config::get('languages');
         // если включена мультиязичность
         if($lanCfg->status === true) {
             
-            $language = new UrlOffsetLanguage();
+            $language = new System_UrlOffsetLanguage();
             $language->init( $lanCfg, $url );
             self::$offset = $language->getOffset();
         }
@@ -56,8 +56,8 @@ class App
         $controllerName	= (string) $url->get(0 + self::$offset, 'string');
         $actionName      = (string) $url->get(1 + self::$offset, 'string');
 
-        $controllerName = ($controllerName)? strtolower($controllerName)	:  Config::get('default_controller');
-        $actionName     	= ($actionName)?       strtolower($actionName)   	:  Config::get('default_action');
+        $controllerName = ($controllerName)?	strtolower($controllerName)	:  System_Config::get('default_controller');
+        $actionName     	= ($actionName)?      	strtolower($actionName)   	:  System_Config::get('default_action');
             
         self::init(array(
                     'controller' => $controllerName,
@@ -97,17 +97,17 @@ class App
                         
                 if (!method_exists(self::$controller,self::$actionName)) {
                     self::init(array('controller' =>'error', 'action' => 'index'));
-                    Errors::add('method', "Метод <strong>$actionName</strong> не найден!");
+                    System_Errors::add('method', "Метод <strong>$actionName</strong> не найден!");
                 }
             }   
             else {
                 self::init(array('controller' =>'error', 'action' => 'index'));
-                Errors::add('class', "Класс <strong>$className</strong> не найден!");
+				System_Errors::add('class', "Класс <strong>$className</strong> не найден!");
             }
         }
         else {
             self::init(array('controller' =>'error', 'action' => 'index'));
-            Errors::add('controller', "Контроллер <strong>$controllerName</strong> не найден!");
+			System_Errors::add('controller', "Контроллер <strong>$controllerName</strong> не найден!");
         }
     }
 
