@@ -1,10 +1,10 @@
 <?
 /**
- * @author Anton Tovstenko
- *
  * Class Controller
  * —упер-класс дл€ определени€ базовых параметров,
  * с которыми будут работать классы-наследники - контроллеры действий
+ *
+ * @author Anton Tovstenko
  */
 class Admin_System_Controller
 {
@@ -30,7 +30,11 @@ class Admin_System_Controller
     private  static $lang;
 
 
-    public $ident;
+	/**
+	 *  омпонент идентификации пользовапел€
+	 * @var object
+	 */
+	public $ident;
 
 
     public function __construct() {

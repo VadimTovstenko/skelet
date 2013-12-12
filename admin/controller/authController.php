@@ -1,46 +1,78 @@
 <?
+/**
+ * Class AuthController
+ * Контроллер процесса авторизации
+ */
 class AuthController extends Admin_System_Controller
 {
 
-    public function init() {
-        $this->view->assign('controller',$this);
-
+	/**
+	 * Инициализация
+	 */
+	public function init() {
+        $this->view->controller = $this;
     }
 
-    public function indexAction()
+
+	/**
+	 * Преренаправление на форму авторизации
+	 */
+	public function indexAction()
     {
         $this->loginAction();
     }
 
 
-
-    public function loginAction()
+	/**
+	 * Прлцесс авторизации
+	 */
+	public function loginAction()
     {
         $request = new Component_Request();
 
-        $login = $request->post('login', 'string');
-        $pass = $request->post('pass', 'string');
+		if( $request->post() )
+		{
+			$login = $request->post('login', 'string');
+			$pass = $request->post('pass', 'string');
 
-        if ( $login && $pass ) {
+			if ( $login && $pass )
+			{
+				$administrators = new Admin_Model_Administrators();
 
+				if($data = $administrators->getByUserName($login))
+				{
+					if ( $data->login === $login && $data->pass === md5($pass) ) {
 
-            if ($login == 'admin' && $pass == 'admin') {
+						$this->ident->login($data);
 
-				$this->ident->login();
+						$this->redirect('/admin');
 
-				$this->ident->setAccess(System_Config::get('access')->admin);
+					} else {
+						// выводим сообщение об ошибке
+						$this->view->error = true;
+					}
 
-                $this->redirect('/admin');
-            }
+				} else {
+					// выводим сообщение об ошибке
+					$this->view->error = true;
+				}
 
-        }
+			} else {
+				// выводим сообщение об ошибке
+				$this->view->error = true;
+			}
+		}
 
+		// передаем логин в форму
         $this->view->login = $login;
 
     }
 
 
-    public function logoutAction()
+	/**
+	 * Разлогинивание
+	 */
+	public function logoutAction()
     {
         $this->ident->logout();
         $this->redirect('/admin');

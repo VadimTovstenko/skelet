@@ -41,14 +41,6 @@ class Admin_System_View
 
 
     /**
-     * Ёкземпл€р класса Cache
-     * ќпредел€етс€ в процессе создани€ экземпл€ра класса View в главном контроллере
-     * @var null
-     */
-    public  $cache   = null;
-
-
-    /**
      * ќпределение основного шаблона
      * ѕо умолчанию 'main'
      * @param $layout
@@ -111,8 +103,7 @@ class Admin_System_View
         $this->content = ob_get_contents();
 
         ob_end_clean();
-        
-        //return $this->content;
+
     }
 
 

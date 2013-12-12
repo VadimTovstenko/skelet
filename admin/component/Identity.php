@@ -12,11 +12,23 @@ class Admin_Component_Identity
     }
 
 
-    public function login()
+    public function login( $data )
     {
 		System_Session::setParam('logged', true);
+		System_Session::setParam('admin_id', $data->id);
+		System_Session::setParam('admin_login', $data->login);
     }
 
+
+	public function getId()
+	{
+		return System_Session::getParam('admin_id');
+	}
+
+	public function getLogin()
+	{
+		return System_Session::getParam('admin_login');
+	}
 
     public function Logout()
     {
@@ -41,7 +53,7 @@ class Admin_Component_Identity
 		$actionAccess			= System_Session::getParam($actionName);
 
 		if ( $controllerAccess !== null && $controllerAccess === false  ) {
-			die('Access Deinded!');
+			System_Errors::error403();
 		}
 
 		if ( $actionAccess !== null && $actionAccess === false ) {

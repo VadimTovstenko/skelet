@@ -42,6 +42,33 @@ class  System_Model
     }
 
 
+	/**
+	 * Очистка данных перед занесением в БД
+	 * @param $val
+	 * @param $type
+	 * @return int|string
+	 */
+	public function clear( $val, $type )
+	{
+		if($type == 'string')
+			return strval(preg_replace('/[^\p{L}\p{Nd}\d\s_\-\.\%\s]/ui', '', $val));
+
+		if($type == 'integer')
+			return intval($val);
+
+	}
+
+
+	/**
+	 * Экранирование
+	 * @param $val
+	 * @return string
+	 */
+	public function escape($val)
+	{
+		return mysql_real_escape_string($val);
+	}
+
     /**
      * Магический метод, создает нужный объект Модели
      * @param $name

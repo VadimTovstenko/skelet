@@ -1,5 +1,5 @@
 <?
-
+$time_start = microtime(true);
 //«апускаем сессию
 session_start();
 @ini_set('session.cookie_lifetime', 0);    // 0 - пока браузер не закрыт

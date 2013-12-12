@@ -26,11 +26,6 @@
                     <li><a href="<? echo  $this->controller->createUrl(array('users','edit','id','231')) ?>">Edit</a></li>
                     <li><a href="<? echo  $this->controller->createUrl(array('contacts','')) ?>">Contacts</a></li>
                 </ul>
-                <ul id="languages">
-                    <? foreach($this->languages as $k=>$lang) { ?>
-                        <li><a href="/<? echo $lang.substr($_SERVER['REQUEST_URI'],3)?>"><? echo $lang?></a></li>
-                    <? } ?>
-                </ul>
                 <div class="content"> <? echo $this->content ?></div>
             </div>
     </div>
