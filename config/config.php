@@ -1,13 +1,12 @@
 <?
     
-//Конфигурация
-
+//Конфигурация приложения
     $config = array(
 
+		// тайтл поумолчанию
         'title' 		=> 'Casino',
 
-        'cache'  	=> false,
-
+		// конфигурация подключения к БД
         'db' 		=> array(
 							'location'      	=> "localhost",
 							'user'   			=> "root",
@@ -17,14 +16,20 @@
 							'show_error'	=> DEBUG_MODE,
         ),
 
-        
+        // контроллер, который будет вызван первым
         'default_controller' 				=> 'players',
+
+		// действие, вызиваемое по умолчанию
         'default_action' 					=> 'index',
 
+		// максимальная длинна полей формы
         'input_max_len'					=> 30,
 
+		// кеширование
+		'cache'  	=> false,
 
-        'languages'    	=> array(
+		// многоязичность
+		'languages'    	=> array(
 										'status'  	=> false,
 										'default' 	=> 'ru',
 										'list'    		=> array (
@@ -34,6 +39,8 @@
 														),
 		),
 
+
+		// правила доступа
 		'access' 	=> array(
 								// roles
 								'admin' 	=> array(
