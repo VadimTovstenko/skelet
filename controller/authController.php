@@ -3,14 +3,14 @@
  * Class AuthController
  * Контроллер процесса авторизации
  */
-class AuthController extends Admin_System_Controller
+class AuthController extends System_Controller
 {
 
 	/**
 	 * Инициализация
 	 */
 	public function init() {
-        $this->view->controller = $this;
+        $this->view->ident = $this->ident;
     }
 
 
@@ -37,15 +37,16 @@ class AuthController extends Admin_System_Controller
 
 			if ( $login && $pass )
 			{
-				$administrators = new Admin_Model_Administrators();
+				$model = new System_Model();
+				$administrators = $model->administrators;
 
-				if($data = $administrators->getByUserName($login))
+				if( $data = $administrators->getByUserName($login) )
 				{
 					if ( $data->login === $login && $data->pass === md5($pass) ) {
 
 						$this->ident->login($data);
 
-						$this->redirect('/admin');
+						$this->redirect('/');
 
 					} else {
 						// выводим сообщение об ошибке
@@ -75,7 +76,7 @@ class AuthController extends Admin_System_Controller
 	public function logoutAction()
     {
         $this->ident->logout();
-        $this->redirect('/admin');
+        $this->redirect('/');
     }
 
 }

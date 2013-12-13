@@ -1,11 +1,8 @@
-<?      
-// Засекаем время 
-    $time_start = microtime(true);
-    
+<?
 //Запускаем сессию
     session_start();     
 
-    define("DEBUG_MODE", true);
+    define("DEBUG_MODE", false);
     define("ROOT", $_SERVER["DOCUMENT_ROOT"]);
     
 //Настройка сообщений об ошибках  

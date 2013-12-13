@@ -18,12 +18,12 @@
         ),
 
         
-        'default_controller' 				=> 'users',
+        'default_controller' 				=> 'players',
         'default_action' 					=> 'index',
 
-        'admin_default_controller'   	=> 'players',
-        'admin_default_action'       	=> 'index',
-        
+        'input_max_len'					=> 30,
+
+
         'languages'    	=> array(
 										'status'  	=> false,
 										'default' 	=> 'ru',

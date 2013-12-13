@@ -13,13 +13,20 @@ class System_Controller
     /**
      * Экземпляр класса View
      * Передает данные из контролера в шаблон представления
-     * Передача даных из контроллера реализована думя способами:
+     * Передача даных реализована двумя способами:
      *      1. $this->view->assign('varName', $varValue);
      *      2. $this->view->varName = $varValue;
      * Управляет кешировашием страницы
-     * @var View
+     * @var object
      */
     public $view;
+
+
+	/**
+	 * Компонент идентификации пользовапеля
+	 * @var object
+	 */
+	public $ident;
 
 
 
@@ -31,15 +38,23 @@ class System_Controller
 
 
 
-    public function __construct() {
-
+    public function __construct()
+	{
         $this->view            	= new System_View();
         $this->view->cache   	= new System_Cache();
+		$this->ident 				= new Component_Identity();
+		$url    						= new System_Url();
         $this->view->title     	=  System_Config::getInstance()->title;
 
-        if ( isset( $_GET['clear_cache'] ) ) {
+        // очистка кеша
+		if ( isset( $_GET['clear_cache'] ) ) {
             $this->view->cache->clear();
         }
+
+		//неавторизированных перенаправляем на форму авторизации
+		if ( !$this->ident->isAuth() && $url->get(1) != 'login') {
+			$this->redirect('/auth/login');
+		}
 
     }
 
@@ -50,7 +65,7 @@ class System_Controller
      * Вызивается в процесе инициализации смещения Url-параметров в классе UrlOffsetLanguage
      * @param $lang
      */
-    public static function setLanguage($lang){
+    public static function setLanguage( $lang ) {
         self::$lang = $lang;
     }
 
@@ -59,29 +74,29 @@ class System_Controller
      * Получение текущего язика
      * @return mixed
      */
-    public function getLanguage(){
+    public function getLanguage() {
         return self::$lang;
     }
 
 
 
     /**
-     * Построение правильного Url-адреса с учетом
+     * Построение правильного Url-адреса с учетом язиковой локали
      * @param array $params
      * @return string
      */
-    public function createUrl(array $params)
+    public function createUrl( array $params )
     {
         $lang = null;
-        if(self::$lang) {
-            $lang = '/'.self::$lang;
+        if( self::$lang ) {
+            $lang = '/' . self::$lang;
         }
         
         $url = '';
-        foreach ($params as $param) {
-            $url .= '/'.$param;
+        foreach ( $params as $param ) {
+            $url .= '/' . $param;
         }
-        return $lang.$url;        
+        return $lang . $url;
     }
 
 
@@ -98,10 +113,10 @@ class System_Controller
 
     /**
      * Функция, вызывающая указанное действие контроллера.
-     * !!! Запрещено вызивать текущее действие текущего контроллера
+     * !!! Запрещено вызивать текущее действие текущего контроллера, то есть самого себя
      * @param array $params
      */
-    public function call(array $params)
+    public function call( array $params )
     {
 		System_App::init($params);
 		System_App::run();
@@ -129,7 +144,8 @@ class System_Controller
     {
         /**
          *смещение для /controller/action
-         * @var $default_offset int */
+         * @var $default_offset int
+		 */
         $default_offset = 2;
 
         $url = new System_Url();

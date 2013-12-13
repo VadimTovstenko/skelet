@@ -13,7 +13,7 @@ class System_View
 
     /**
      * Название файла представления
-     * По умолчанию он определяетя как название Действия
+     * По умолчанию он определяетcя как название Действия
      * @var null
      */
     private $view    = null;
@@ -53,7 +53,7 @@ class System_View
      * По умолчанию 'main'
      * @param $layout
      */
-    public function setLayout($layout)
+    public function setLayout( $layout )
     {
         $this->layout = $layout;
     }
@@ -73,7 +73,7 @@ class System_View
      * Определение названия файла представления
      * @param $view
      */
-    public function tpl($view)
+    public function tpl( $view )
     {
         $this->view = $view;
     }
@@ -84,7 +84,7 @@ class System_View
      * @param $name
      * @param $value
      */
-    public function assign($name,$value)
+    public function assign( $name, $value )
     {
         $this->data[$name] = $value;
     }
@@ -98,7 +98,7 @@ class System_View
      */
     public function content( $controllerName, $actionName )
     {
-        if(!isset($this->view)){
+        if( ! isset( $this->view ) ) {
             $this->view = substr( $actionName, 0 , strpos( $actionName , 'Action' ) );
         }
 
@@ -112,7 +112,6 @@ class System_View
 
         ob_end_clean();
         
-        //return $this->content;
     }
 
 
@@ -143,7 +142,7 @@ class System_View
      */
     public function __get( $name )
     {
-        if (array_key_exists($name, $this->data)) {
+        if ( array_key_exists( $name, $this->data ) ) {
             return $this->data[$name];
         }
         else {

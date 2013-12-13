@@ -1,10 +1,10 @@
 <?
 /**
- *  @author 	Anton Tovstenko
- *
  * Class Config
  * Синглтон
  * Класс для получения параметров из конфигурационного файла
+ *
+ * @author 	Anton Tovstenko
  */
 class System_Config
 {
@@ -17,13 +17,13 @@ class System_Config
      * @param $paramName
      * @return mixed
      */
-    public static function get($paramName)
+    public static function get( $paramName )
     {
-        if (!isset(self::$instance)) {
+        if ( ! isset( self::$instance ) ) {
             self::getInstance();
         }
 
-        if ( isset(self::$instance->$paramName) ) {
+        if ( isset( self::$instance->$paramName ) ) {
             return self::$instance->$paramName;
         }
         return null;
@@ -36,12 +36,12 @@ class System_Config
      */
     public static function getInstance()
     {
-        if (!isset(self::$instance)) {
-            if(!file_exists(ROOT.'/config/config.php')) {
+        if ( ! isset( self::$instance ) ) {
+            if( ! file_exists(ROOT.'/config/config.php' ) ) {
                 die('Конфиг не найден!');
             }
             require_once(ROOT."/config/config.php");
-            self::$instance = self::_toObject($config);
+            self::$instance = self::_toObject( $config );
 
         }
         return self::$instance;
@@ -53,9 +53,9 @@ class System_Config
      * @param $array
      * @return mixed
      */
-    private function _toObject($array)
+    private function _toObject( $array )
     {
-        return json_decode (json_encode ($array), FALSE);
+        return json_decode (json_encode ( $array ), FALSE);
     }
 
 

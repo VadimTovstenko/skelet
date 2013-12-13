@@ -1,19 +1,19 @@
 <?
 /**
- * Class Model
- * Создает подключение к БД
- * Дает доступ к моделям через свойства екземпляка класса
- *      Пример:
+ * Дает доступ к моделям через свойства екземпляра класса
+ *   Пример:
  *      $model = new System_Model();
  *      $users = $model->users;
  *
- * @author Anton Tovstenko *
+ * Создает подключение к БД
+ *
+ * @author Anton Tovstenko
  */
 class  System_Model
 {
 
     /**
-     * Адрес хранения моделей
+     * Директория хранения моделей
      * @var string
      */
     private $_dir = '/model/';
@@ -43,7 +43,7 @@ class  System_Model
 
 
 	/**
-	 * Очистка данных перед занесением в БД
+	 * Очистка данных
 	 * @param $val
 	 * @param $type
 	 * @return int|string
@@ -64,9 +64,9 @@ class  System_Model
 	 * @param $val
 	 * @return string
 	 */
-	public function escape($val)
+	public function escape( $val )
 	{
-		return mysql_real_escape_string($val);
+		return  mysql_real_escape_string( htmlspecialchars( strip_tags( trim( $val ) ) ) );
 	}
 
     /**
@@ -74,22 +74,23 @@ class  System_Model
      * @param $name
      * @return mixed
      */
-    public function __get($name)
+    public function __get( $name )
 	{
 		// Если такой объект уже существует, возвращаем его
-		if (isset(self::$objects[$name])) {
-			return(self::$objects[$name]);
+		if ( isset( self::$objects[$name] ) ) {
+			return( self::$objects[$name] );
 		}
 		
 		// Определяем имя нужного класса
-		$class = ucfirst(strtolower($name));
+		$class = ucfirst( strtolower( $name ) );
         $path  = ROOT.$this->_dir.$class.'.php';
         
-        if(!file_exists($path))
-            die("Модель <strong>$class</strong> не существует!");
-		
+        if( ! file_exists( $path ) ) {
+			die("Модель <strong>$class</strong> не существует!");
+		}
+
 		// Подключаем его
-		include_once($path);
+		include_once( $path );
 
 		// Сохраняем для будущих обращений к нему
 		self::$objects[$name] = new $class();

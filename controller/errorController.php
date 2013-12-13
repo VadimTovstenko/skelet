@@ -1,10 +1,12 @@
 <?
+/**
+ * Обработчик ошибок
+ */
 class ErrorController extends System_Controller
 {
 
-    public function indexAction()
+	public function indexAction()
     {
-
         if ( System_Errors::isErrors() ) {
 
             if ( DEBUG_MODE ) {
@@ -15,19 +17,25 @@ class ErrorController extends System_Controller
 
                 exit;
 
-            }  else {
+            } else {
                 $this->view->setLayout('error');
             }
-
         }
     }
 
 
-    public function error404Action()
+	/**
+	 * Ошибка 404
+	 */
+	public function error404Action()
     {
         $this->view->setLayout('error');
     }
 
+
+	/**
+	 * Ошибка 403
+	 */
 	public function error403Action()
 	{
 		$this->view->setLayout('error');

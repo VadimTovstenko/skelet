@@ -24,17 +24,18 @@ class System_UrlOffsetLanguage
      * @param $url
      * @return int
      */
-    public function init($config,$url) {
-                
-        if($url->get(0)) {
-           
-            if( in_array( $url->get(0), $config->list ) ) {
-                $this->offset   = 1;
-                $language = $url->get(0);
+    public function init( $config , $url )
+	{
+        if( $url->get(0) )
+		{
+            if( in_array( $url->get(0), $config->list ) )
+			{
+                $this->offset	= 1;
+                $language 		= $url->get(0);
             }
             else {
-                $this->offset   = 0;
-                $language = $config->default;
+                $this->offset	= 0;
+                $language 		= $config->default;
             }  
         } 
         else {

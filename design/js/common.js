@@ -1,71 +1,117 @@
-
-var mainClass = function(){
-
-    this.init = function(){
-        $('.ajax-gift').click(gift_ajax);
-        $('#search').click(search);
-    }
-
-}
-
-
-function search()
-{
-    var pid  = $('input[name="search_id"').val();
-    $.ajax({
-        url: 'users/search',
-        data: { pid : pid },
-        type: "GET",
-        dataType: "json",
-        success: function(data){
-
-            user   =  '<td><img src="'+ data.image+'" width="30"/></td>';
-            user +=  '<td>'+data.name+'</td>';
-            user +=  '<td>'+data.pid+'</td>';
-            user +=  '<td><button class="ajax-gift" data-id='+data.pid+'>Дать подарок</button></td>';
-            user   = '<tr>'+user+'</tr>';
-
-            $('table.users').append(user);
-        }
-    });
-}
-
-function gift_ajax() {
-
-    var pid = $(this).attr('data-id');
-
-    $.ajax({
-        url: 'users/gift',
-        data: { pid : pid },
-        type: "GET",
-        dataType: "html",
-        success: function(data){
-            alert(data);
-        }
-    });
-}
-
-function hash_load(){
-    var hash = window.location.hash.substr(1);
-    if(hash == 'profile')
-        profile();
-}
-
-function rand(k){
-   return Math.floor((Math.random()*k)+1);
-}
-
-
 $(document).ready(function(){
-    
-    main = new mainClass();
 
-    main.init();
+
+    $( "#datepicker" ).datepicker({
+        changeMonth: true,
+        changeYear: true,
+        minDate: new Date(1960, 1 - 1, 1),
+        yearRange: '1960:1995',
+        dateFormat: 'dd.mm.yy'
+    });
+
+
+
+//-------------------------------------------------//
+// Проверка на уникальность имени игрока
+//-------------------------------------------------//
+    var inputUN = $('.add_edit_form input[name="username"]');
+
+    inputUN.on('keyup', function() {
+
+        if(inputUN.val().length > 2)
+        {
+            $.ajax({
+                url: '/players/checklogin',
+                data: { username : inputUN.val() },
+                type: "POST",
+                dataType: "json",
+                cache: false,
+                success: function(data){
+                    if(data.match) {
+                        inputUN.addClass('busy').removeClass('not-busy');
+                    } else {
+                        inputUN.removeClass('busy').addClass('not-busy');
+                    }
+                }
+            });
+        }
+    });
 
     $.ajaxSetup({ cache: false });
 
-    $(window).resize();
-      
-}); 
+
+//-------------------------------------------------//    
+// Выделение активного меню
+//-------------------------------------------------//
+    $('.jqueryslidemenu a').each(function () {    
+        var location = window.location.href 
+        var link = this.href                
+        var result = location.match(link);  
+
+        if(result != null) {               
+            $(this).addClass('current'); 
+        }
+    });
+    
+//-------------------------------------------------//    
+// Кнопка "Сохранить"
+//-------------------------------------------------//
+    $('a#save').click(function(){
+        $('#add_edit_form').submit(); 
+        return false;
+    });
 
 
+
+//-------------------------------------------------//
+// Кнопка "Поиск"
+//-------------------------------------------------//
+    $('#search').click(function(){
+        $('#search-cont').toggleClass('visible');
+    })
+
+
+//-------------------------------------------------//
+// Выделить все чекбоксы
+//-------------------------------------------------//
+	$("#check_all").click(function() {
+        if( $(this).prop('checked'))
+            $('input[type="checkbox"][name*="check"]').prop('checked', true).parent().parent().parent().addClass('tr_select');
+        else 
+            $('input[type="checkbox"][name*="check"]').prop('checked', false).parent().parent().parent().removeClass('tr_select');
+	});
+    
+//-------------------------------------------------//
+// Подсветка чекбокса
+//-------------------------------------------------//
+    $('input[type="checkbox"]').not(("#check_all")).click(function(){
+        if($(this).prop("checked")) 
+            $(this).parent().parent().parent().addClass('tr_select');
+        else 
+            $(this).parent().parent().parent().removeClass('tr_select');
+    });
+
+//-------------------------------------------------//
+// Диалоговое окно при удалении групы элементов
+//-------------------------------------------------//
+    $('#event_apply').click(function(){
+        
+        if($('select[name="event"]').val() == '') 
+        {
+            alert("Выберите действие!");
+            return false;
+        } 
+        if($('select[name="event"]').val() == 'delete')
+        {
+            if(confirm("Уверены, что хотите удалить?"))
+                $('#view_form').submit();
+        }
+        else 
+            $('#view_form').submit(); 
+        return false;     
+    });   
+    
+
+     
+    
+});

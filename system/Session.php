@@ -1,9 +1,9 @@
 <?
 /**
- * @author Anton Tovstenko
- *
  * Class Session
  * Класс для работы с сессионным массивом
+ *
+ * @author Anton Tovstenko
  */
 class System_Session
 {
@@ -15,7 +15,7 @@ class System_Session
      */
     public static function getParam( $name )
     {
-        return isset($_SESSION[$name]) ? $_SESSION[$name] : null;
+        return isset( $_SESSION[$name] ) ? $_SESSION[$name] : null;
     }
 
 
@@ -37,8 +37,8 @@ class System_Session
      */
     public static function delParam( $name )
     {
-        if (isset($_SESSION[$name])) {
-            unset($_SESSION[$name]);
+        if ( isset( $_SESSION[$name] ) ) {
+            unset( $_SESSION[$name] );
         }
     }
 

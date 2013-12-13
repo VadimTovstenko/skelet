@@ -1,9 +1,8 @@
 <?
 /**
- * @author 	Anton Tovstenko
- *
- * Class Errors
  * Класс для работы с ошибками
+ *
+ * @author 	Anton Tovstenko
  */
 class  System_Errors
 {
@@ -21,21 +20,20 @@ class  System_Errors
      * @param $name
      * @param $mess
      */
-    public static function add($name,$mess)
+    public static function add( $name , $mess )
     {
         self::$errors[$name] = $mess;
     }
 
 
-
     /**
-     * Получение сообщения ошибки по названию
+     * Получение сообщения ошибки по ее названию
      * @param $name
      * @return bool
      */
     public static function get($name)
     {
-        if ( isset(self::$errors[$name]) ) {
+        if ( isset( self::$errors[$name] ) ) {
             return self::$errors[$name];
         }
         return false;
@@ -75,6 +73,9 @@ class  System_Errors
         exit;
     }
 
+	/**
+	 * Ошибка 403
+	 */
 	public static function error403()
 	{
 		System_App::init(array('controller' =>'error', 'action' => 'error403'));

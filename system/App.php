@@ -1,16 +1,13 @@
 <?
 /**
- *  @author 	Anton Tovstenko
- *
- * Class App
  * Главный класс приложения.
- * Получает данные из адресной строки.
  * Определяет Контроллер и вызывает Действие
  * Выводит готовую страницу
+ *
+ *  @author 	Anton Tovstenko
  */
 class System_App
 {
-
 
     /**
      * Экземпляр вызываемого Контроллера
@@ -19,9 +16,8 @@ class System_App
     private static $controller;
 
 
-
     /**
-     * Название вызываемого контроллера
+     * Название вызываемого действия
      */
     private static $actionName;
 
@@ -42,24 +38,23 @@ class System_App
     {      
         $url = new System_Url();
 
-        // languages detect
+		// если включена мультиязичность, определяем смещение контроллера в адресной строке
         $lanCfg = System_Config::get('languages');
-        // если включена мультиязичность
-        if($lanCfg->status === true) {
+        if ( $lanCfg->status === true ) {
             
             $language = new System_UrlOffsetLanguage();
             $language->init( $lanCfg, $url );
             self::$offset = $language->getOffset();
         }
-        // languages detect end
         
         $controllerName	= (string) $url->get(0 + self::$offset, 'string');
         $actionName      = (string) $url->get(1 + self::$offset, 'string');
 
-        $controllerName = ($controllerName)?	strtolower($controllerName)	:  System_Config::get('default_controller');
-        $actionName     	= ($actionName)?      	strtolower($actionName)   	:  System_Config::get('default_action');
-            
-        self::init(array(
+        $controllerName = ($controllerName)	?	strtolower($controllerName)		:  System_Config::get('default_controller');
+        $actionName     	= ($actionName)			?  	strtolower($actionName)   		:  System_Config::get('default_action');
+
+		// Инициализируем приложение
+		self::init(array(
                     'controller' => $controllerName,
                     'action'     	=> $actionName,
                    ));
@@ -68,15 +63,15 @@ class System_App
     
     /**
      * Инициализация приложения
-     * Определение контроллера и действия
+     * Создание контроллера и действия
      * @param array(
                 'controller'	=> 'controllerName',
                 'action'     	=> 'actionName',
                 )
-     * */
+     */
     public static function init(array $params)
     {
-        if(!isset($params['controller']) || !isset($params['action'])) {
+        if ( ! isset( $params['controller'] ) || ! isset( $params['action'] ) ) {
             die("Неправилно указаны праметры");
         }
         
@@ -85,28 +80,28 @@ class System_App
         
         $controllerPath  	= ROOT."/controller/".$controllerName."Controller.php";
 
-        if(file_exists($controllerPath))
+        if ( file_exists( $controllerPath ) )
         {   
             include_once $controllerPath;
-            $className = ucfirst($controllerName).'Controller';
+            $className = ucfirst( $controllerName ).'Controller';
             
-            if (class_exists($className)) {
+            if ( class_exists( $className ) ) {
 
-                self::$controller = new $className();
-                self::$actionName = $actionName."Action";
+                self::$controller 		= new $className();
+                self::$actionName 	= $actionName."Action";
                         
-                if (!method_exists(self::$controller,self::$actionName)) {
-                    self::init(array('controller' =>'error', 'action' => 'index'));
+                if ( ! method_exists( self::$controller , self::$actionName ) ) {
+                    self::init( array('controller' =>'error', 'action' => 'index') );
                     System_Errors::add('method', "Метод <strong>$actionName</strong> не найден!");
                 }
             }   
             else {
-                self::init(array('controller' =>'error', 'action' => 'index'));
+				self::init( array('controller' =>'error', 'action' => 'index') );
 				System_Errors::add('class', "Класс <strong>$className</strong> не найден!");
             }
         }
         else {
-            self::init(array('controller' =>'error', 'action' => 'index'));
+			self::init( array('controller' =>'error', 'action' => 'index') );
 			System_Errors::add('controller', "Контроллер <strong>$controllerName</strong> не найден!");
         }
     }
@@ -124,15 +119,37 @@ class System_App
         $action     	= self::$actionName;
         $controller = self::$controller;
         
-        if(method_exists($controller,'init')) {
+        if ( method_exists( $controller ,'init' ) ) {
             $controller->init();
         }
         
         $controller->$action(); 
-        $controller->view->content(get_class($controller),$action);
+        $controller->view->content( get_class( $controller ) , $action );
         
         print $controller->view->renderLayout();
         
     }
+
+
+	/**
+	 * Получение имени текущего контроллера
+	 * @return string
+	 */
+	public static function getControllerName()
+	{
+		$name = get_class( self::$controller );
+		return strtolower( substr( $name , 0 , strpos( $name , 'Controller' ) ) );
+	}
+
+
+	/**
+	 * Получение имени текущего действия
+	 * @return mixed
+	 */
+	public static function setActionName()
+	{
+		$name = self::$actionName;
+		return substr( $name, 0 , strpos( $name , 'Action' ) );
+	}
 
 }

@@ -1,4 +1,7 @@
 <?
+/**
+ * Компонент для работы с Базой Данных
+ */
 class Component_Db
 { 
     private $db_user;
@@ -43,13 +46,13 @@ class Component_Db
         if(!$config->db)
            return false;
         
-        $this->db_user = $config->db->user;
-        $this->db_pass = $config->db->pass;
-        $this->db_name = $config->db->name;
-        $this->charset = $config->db->charset;
-        $this->db_location = $config->db->location;
-        $this->show_error  = $config->db->show_error;
-        $this->cache_size  = $config->db->cache_size;
+        $this->db_user 		= $config->db->user;
+        $this->db_pass 		= $config->db->pass;
+        $this->db_name 	= $config->db->name;
+        $this->charset 		= $config->db->charset;
+        $this->db_location 	= $config->db->location;
+        $this->show_error 	= $config->db->show_error;
+        $this->cache_size  	= $config->db->cache_size;
        
         if(!$this->db_id = @mysql_connect($this->db_location, $this->db_user, $this->db_pass)) {
 			if($this->show_error == 1) { 

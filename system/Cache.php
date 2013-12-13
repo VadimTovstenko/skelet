@@ -30,7 +30,7 @@ class System_Cache
     public function  setCache($content)
     {
 
-        if ( !System_Config::get('cache')  || !$this->enable ) {
+        if ( ! System_Config::get('cache')  || ! $this->enable ) {
             return false;
         }
 

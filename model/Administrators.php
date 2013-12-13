@@ -2,7 +2,7 @@
 /**
  * Модель таблицы Administrators
  */
-class Admin_Model_Administrators extends System_Model
+class Administrators extends System_Model
 {
 	/**
 	 * Название таблицы
@@ -18,13 +18,17 @@ class Admin_Model_Administrators extends System_Model
 	 */
 	public function getByUserName( $name ) {
 
-		$name = $this->escape($name);
+		$name = $this->escape( $name );
 
-		$this->db->query("SELECT * FROM " . $this->_table . " WHERE login = '" . $name . "' AND active = 1 LIMIT 1");
+		$this->db->query("SELECT * FROM " . $this->_table . " WHERE login = '" . $name . "'  LIMIT 1");
 		return $this->db->result();
 	}
 
 
+	/**
+	 * Метод возвращает имя таблицы
+	 * @return string
+	 */
 	public function table()
 	{
 		return $this->_table;
