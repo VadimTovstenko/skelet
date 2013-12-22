@@ -54,7 +54,7 @@ class Players extends System_Model
 		$table = $this->_table;
 
 		if ( $condition ) {
-			$condition = " WHERE ".$condition;
+			$condition = " WHERE " . $condition;
 		}
 
 		$this->db->query('
